@@ -1,0 +1,44 @@
+#version: '3.8'
+#
+#services:
+#  redis:
+#    image: redis:latest
+#    container_name: redis
+#    networks:
+#      - spring-redis-network
+#
+#  springboot-app:
+#    image: db-application:1.3
+#    container_name: springboot-app
+#    ports:
+#      - "8080:8080"
+#    environment:
+#      - SPRING_REDIS_HOST=redis
+#      - SPRING_REDIS_PORT=6379
+#    depends_on:
+#      - redis
+#    networks:
+#      - spring-redis-network
+#
+#networks:
+#  spring-redis-network:
+#    driver: bridge
+
+version: '3.8'
+services:
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - "6380:6379"  # Ensure the host port does not conflict
+
+  springboot-app:
+    build: .
+    container_name: springboot-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - redis
+    environment:
+      - SPRING_REDIS_HOST=redis
+      - SPRING_REDIS_PORT=6379
