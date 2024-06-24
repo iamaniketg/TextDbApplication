@@ -5,17 +5,8 @@
 #EXPOSE 8080
 #ENTRYPOINT ["java" ,"-jar","/dbapp.jar"]
 
-# Use the official OpenJDK image as the base image
-FROM openjdk:21
-
-# Set the working directory inside the container
+FROM openjdk:17-alpine
 WORKDIR /app
-
-# Copy the Spring Boot JAR file into the container
 COPY target/dbapp.jar dbapp.jar
-
-# Expose the port that the application runs on
-EXPOSE 8080
-
-# Run the JAR file
+EXPOSE 8085
 ENTRYPOINT ["java", "-jar", "dbapp.jar"]
